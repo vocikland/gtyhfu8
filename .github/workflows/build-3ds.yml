@@ -1,0 +1,50 @@
+name: Build Nintendo 3DS Binaries (.3dsx and .cia)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-3ds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build .3dsx and .cia in devkitARM Docker
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/source" \
+            -w /source \
+            devkitpro/devkitarm:latest \
+            /bin/bash -c "
+              dkp-pacman -Syu --noconfirm \
+                3ds-dev \
+                3ds-libctru \
+                3ds-citro2d \
+                3ds-citro3d \
+                3ds-mbedtls \
+                3ds-zlib \
+                makerom \
+                bannertool \
+                3dsxtool && \
+              make clean && \
+              make -j\$(nproc) && \
+              make cia
+            "
+
+      - name: Upload .3dsx artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmashBanana-3dsx
+          path: SmashBanana.3dsx
+
+      - name: Upload .cia artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmashBanana-cia
+          path: SmashBanana.cia

@@ -1,0 +1,6 @@
+{
+  "name": "3DS BananaMod Studio & Prompt Architect",
+  "description": "Architectural prompt generator, specification engineer, and interactive dual-screen previewer for building a Nintendo 3DS GameBanana client for Super Smash Bros. 3DS mods.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

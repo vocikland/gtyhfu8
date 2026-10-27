@@ -1,0 +1,52 @@
+#---------------------------------------------------------------------------------
+# SmashBanana RSF Configuration for makerom
+# Enables New 3DS CPU speedup, direct SDMC access, and HTTPS networking
+#---------------------------------------------------------------------------------
+
+BasicInfo:
+  Title                   : "SmashBanana 3DS"
+  CompanyCode             : "00"
+  ProductCode             : "CTR-P-SMBN"
+  ContentType             : Application
+  Logo                    : Nintendo
+
+TitleInfo:
+  UniqueId                : 0xF6364
+  Category                : Application
+
+CardInfo:
+  MediaSize               : 128MB
+  MediaType               : Card1
+
+Option:
+  UseOnSD                 : true
+  EnableCompress          : true
+  FreeArg                 : false
+  ClearBackup             : false
+  MemoryType              : Application
+  SystemMode              : 64MB
+
+SystemControlInfo:
+  SaveDataSize            : 512KB
+  RemasterVersion         : 0000
+  StackSize               : 0x40000
+
+  # Access rights for SD card reading and writing mod files
+  FileSystemAccess:
+    - DirectSdmc
+    - DirectSdmcWrite
+
+  # CPU and Service permissions
+  ServiceAccessControl:
+    - apt:u
+    - cfg:u
+    - cfgu:u
+    - fs:USER
+    - hid:USER
+    - ptm:sysm
+    - ptm:u
+    - soc:U
+    - http:C
+    - ssl:C
+    - cam:u
+    - ndsp:u
